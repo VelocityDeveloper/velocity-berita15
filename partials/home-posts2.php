@@ -1,60 +1,33 @@
-<?php
-$post2_title    = velocitytheme_option('title_posts_home_2', 'Recent Posts');
-$post2_cat      = velocitytheme_option('cat_posts_home_2');
-?>
-<div class="widget position-relative part_posts_home_1">
+<div class="widget position-relative part_posts_home_2">
 
-    <h3 class="heading-theme position-relative"> 
-        <span>    
-            <?php if ($post2_title && $post2_title !== 'disable') : ?>
-                <a style="color: inherit;" href="<?php echo get_tag_link($post2_cat); ?>">
-                    <?php echo $post2_title; ?>
-                </a>
-            <?php else: ?>
-                <?php echo $post2_title; ?>
-            <?php endif; ?>
-        </span>   
-    </h3>
+    <?php velocity_berita15_kepala_blok('posts_home_2'); ?>
     <div class="part-post-home-2">
         <?php
-        $post2_args = array(
-            'post_type'     => 'post',
-            'cat'           => $post2_cat,
-            'posts_per_page' => 4,
-        );
-        // The Query
-        $n2 = 1;
-        $post2query = new WP_Query($post2_args);
-        $count2 = $post2query->post_count;
+        $post2query = new WP_Query(velocity_berita15_query_blok('posts_home_2', 4));
         if ($post2query->have_posts()) {
+            $n2 = 1;
             echo '<div class="row g-3">';
             while ($post2query->have_posts()) {
                 $post2query->the_post();
-
-                if($n2 == 1){                   
+                if (1 === $n2) {
                     echo '<div class="col-md-7">';
-                    echo module_cardposts(5);
+                    module_cardposts(5);
                     echo '</div>';
-                }
-
-                if($n2 == 2){
-                    echo '<div class="col-md-5">';
-                }
-
-                if($n2 > 1){
+                } else {
+                    if (2 === $n2) {
+                        echo '<div class="col-md-5">';
+                    }
                     echo '<div class="mb-2 mb-md-3">';
-                    echo module_cardposts(1);
+                    module_cardposts(1);
                     echo '</div>';
                 }
-
                 $n2++;
             }
-            if($count2 > 1){
+            if ($n2 > 2) {
                 echo '</div>';
             }
             echo '</div>';
         }
-        /* Restore original Post Data */
         wp_reset_postdata();
         ?>
     </div>

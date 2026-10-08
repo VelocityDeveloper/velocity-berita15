@@ -26,9 +26,11 @@ if (!function_exists('justg_child_enqueue_parent_style')) {
             $theme->parent()->get('Version')
         );
 
-        wp_enqueue_style( 'slick', 'https://cdnjs.cloudflare.com/ajax/libs/slick-carousel/1.8.1/slick.min.css', 1);
-        wp_enqueue_style( 'slick-theme', 'https://cdnjs.cloudflare.com/ajax/libs/slick-carousel/1.8.1/slick-theme.min.css', 1);
-        wp_enqueue_script( 'slick', 'https://cdnjs.cloudflare.com/ajax/libs/slick-carousel/1.8.1/slick.min.js', array(), 1, true );
+        // Slick hanya dipakai carousel Posts Home 4 di beranda.
+        if (is_front_page() || is_home()) {
+            wp_enqueue_style('slick', 'https://cdnjs.cloudflare.com/ajax/libs/slick-carousel/1.8.1/slick.min.css', array(), '1.8.1');
+            wp_enqueue_script('slick', 'https://cdnjs.cloudflare.com/ajax/libs/slick-carousel/1.8.1/slick.min.js', array('jquery'), '1.8.1', true);
+        }
 
         $css_version = $theme->parent()->get('Version') . '.' . filemtime(get_stylesheet_directory() . '/css/custom.css');
         wp_enqueue_style(
@@ -46,7 +48,8 @@ if (!function_exists('justg_child_enqueue_parent_style')) {
         );
 
         $js_version = $theme->parent()->get('Version') . '.' . filemtime(get_stylesheet_directory() . '/js/custom.js');
-        wp_enqueue_script('justg-custom-scripts', get_stylesheet_directory_uri() . '/js/custom.js', array(), $js_version, true);
+        wp_enqueue_script('justg-custom-scripts', get_stylesheet_directory_uri() . '/js/custom.js', array('jquery'), $js_version, true);
     }
-    add_action('wp_enqueue_scripts', 'justg_child_enqueue_parent_style');
+    // Prioritas 30: sesudah CSS tema induk (prioritas 20) agar custom.css tidak kalah.
+    add_action('wp_enqueue_scripts', 'justg_child_enqueue_parent_style', 30);
 }

@@ -1,5 +1,5 @@
 jQuery(function($) {
-    $('.carousel-posthome-4').slick({
+    if ($.fn.slick) $('.carousel-posthome-4').slick({
         dots: false,
         infinite: true,
         speed: 300,
@@ -31,7 +31,7 @@ jQuery(function($) {
         nextArrow: '<button type="button" class="btn btn-dark btn-sm rounded-0 position-absolute top-50 end-0 translate-middle-y"><i class="fa fa-angle-right" aria-hidden="true"></i></button>',
     });
     $('.close_berita_iklan').on('click', function(){
-      $target = $(this).closest('.berita_iklan');
+      var $target = $(this).closest('.berita_iklan');
       $target.hide('slow', function(){ $target.remove(); });
     });
 });

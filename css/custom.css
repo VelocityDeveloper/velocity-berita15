@@ -103,7 +103,7 @@ aside.widget .widget-title:after,
     #primary {
         max-width: 75% !important;
     }
-    #main-menu > li > .nav-link {
+    #main-nav #main-menu > li > .nav-link {
         padding: 0.85rem 1rem !important;
         text-transform: uppercase;
         font-weight: bold;
@@ -111,9 +111,51 @@ aside.widget .widget-title:after,
         font-size: .85rem;
         transition: all .5s;
     }
-    #main-menu > li > .nav-link:hover,
-    #main-menu > li.current-menu-item.active > .nav-link {
+    #main-nav #main-menu > li > .nav-link:hover,
+    #main-nav #main-menu > li.current-menu-item > .nav-link {
         background-color: var(--color-theme);
         color: #ffffff;
+    }
+}
+/* Gambar dalam kotak rasio tidak gepeng */
+.ratio > img {
+    object-fit: cover;
+}
+.berita_iklan img {
+    height: auto;
+}
+.close_berita_iklan {
+    color: #ffffff;
+    filter: drop-shadow(0 0 2px rgba(0, 0, 0, .6));
+}
+.heading-theme span a {
+    color: inherit;
+}
+/* Isi artikel: URL/kata panjang tidak melebarkan halaman di HP */
+.entry-content {
+    overflow-wrap: anywhere;
+}
+.entry-content img,
+.entry-content iframe,
+.entry-content video {
+    max-width: 100%;
+}
+.entry-content img {
+    height: auto;
+}
+.carousel-caption span {
+    --bs-bg-opacity: .9;
+    line-height: 1.4;
+}
+.carousel-posthome-4 .slick-track {
+    display: flex;
+}
+@media (max-width: 767.98px) {
+    .carousel-caption {
+        font-size: .8rem;
+    }
+    /* Kotak Rekomendasi tidak menutupi isi artikel di HP */
+    .berita-rekomendasi {
+        display: none !important;
     }
 }

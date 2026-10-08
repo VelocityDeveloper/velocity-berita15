@@ -37,7 +37,11 @@ $container = velocitytheme_option('justg_container_type', 'container');
                 ?>
                     <header class="page-header block-primary">
                         <?php
-                        the_archive_title('<h1 class="page-title text-uppercase">', '</h1>');
+                        if (is_search()) {
+                            echo '<h1 class="page-title text-uppercase">' . esc_html(sprintf(__('Hasil pencarian: %s', 'justg'), get_search_query(false))) . '</h1>';
+                        } else {
+                            the_archive_title('<h1 class="page-title text-uppercase">', '</h1>');
+                        }
                         the_archive_description('<div class="taxonomy-description border fw-light fst-italic bg-light d-block p-3 pb-1 mb-3"><small>', '</small></div>');
                         ?>
                     </header><!-- .page-header -->
@@ -51,9 +55,9 @@ $container = velocitytheme_option('justg_container_type', 'container');
 
                             <div class="row">
                                 <div class="col-5 col-md-3 col-xl-2">
-                                    <a href="<?php echo get_the_permalink(); ?>">
+                                    <a href="<?php echo get_the_permalink(); ?>" tabindex="-1" aria-hidden="true">
                                         <div class="ratio ratio-1x1 bg-light overflow-hidden">
-                                            <?php echo get_the_post_thumbnail( get_the_ID(), 'thumbnail', array( 'class' => 'w-100' ) ); ?>
+                                            <?php echo get_the_post_thumbnail( get_the_ID(), 'thumbnail', array( 'class' => 'w-100', 'alt' => the_title_attribute( array( 'echo' => false ) ) ) ); ?>
                                         </div>
                                     </a>
                                 </div>
@@ -61,8 +65,8 @@ $container = velocitytheme_option('justg_container_type', 'container');
                                     <?php 
                                     $categories = get_the_terms( get_the_ID(), 'category' );
                                     if ($categories) : ?>
-                                        <a class="d-inline-block small mb-1 fw-bold" href="<?php echo get_term_link( $categories[0]->slug, 'category' );?>">
-                                            <?php echo $categories[0]->name; ?>
+                                        <a class="d-inline-block small mb-1 fw-bold" href="<?php echo esc_url(get_category_link($categories[0]->term_id)); ?>">
+                                            <?php echo esc_html($categories[0]->name); ?>
                                         </a>
                                     <?php endif; ?>
                                     <?php
@@ -72,7 +76,7 @@ $container = velocitytheme_option('justg_container_type', 'container');
                                     );
                                     ?>
                                     <div class="d-none d-md-block">
-                                        <?php echo vdberita_limit_text(strip_tags(get_the_excerpt()), 25); ?>
+                                        <?php echo esc_html(vdberita_limit_text(wp_strip_all_tags(get_the_excerpt()), 25)); ?>
                                     </div>
                                     <div class="mt-2 small opacity-50">
                                         <?php echo get_the_date(); ?>

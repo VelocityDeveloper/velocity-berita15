@@ -39,7 +39,7 @@ $format     = get_post_format() ?: 'standard';
 
                     <?php the_title('<h1 class="entry-title h3 fw-bold">', '</h1>'); ?>
 
-                    <div class="position-relative d-flex border-bottom border-2 pb-2 mt-2 mb-3">
+                    <div class="position-relative d-flex flex-wrap align-items-center border-bottom border-2 pb-2 mt-2 mb-3">
                             <small>
                                 Author by <?php echo get_the_author(); ?>
                             </small>
@@ -56,7 +56,7 @@ $format     = get_post_format() ?: 'standard';
                                     Category 
                                     <?php foreach ($categories as $index => $tag) : ?>
                                         <?php echo $index === 0 ? '' : ','; ?>
-                                        <a href="<?php echo get_tag_link($tag->term_id); ?>"> <?php echo $tag->name; ?> </a>
+                                        <a href="<?php echo esc_url(get_category_link($tag->term_id)); ?>"> <?php echo esc_html($tag->name); ?> </a>
                                         <?php if ($index > 1) {
                                             break;
                                         } ?>
@@ -75,7 +75,7 @@ $format     = get_post_format() ?: 'standard';
                                 echo get_the_post_thumbnail( get_the_ID(), 'full', array( 'class' => 'w-100' ) );
                                 $featured_image_caption = get_the_post_thumbnail_caption(get_the_ID());
                                 if($featured_image_caption){
-                                    echo '<div class="text-muted fst-italic"><small>' . $featured_image_caption . '</small></div>';
+                                    echo '<div class="text-muted fst-italic"><small>' . wp_kses_post($featured_image_caption) . '</small></div>';
                                 }
                             echo '</div>';
                         }
@@ -91,7 +91,7 @@ $format     = get_post_format() ?: 'standard';
                                     <div class="mt-2 mb-4">
                                         <?php foreach ($gettags as $index => $tag) : ?>
                                             <?php echo $index === 0 ? '' : ' '; ?>
-                                            <a class="btn btn-dark btn-sm bg-color-theme border-0 rounded-0" href="<?php echo get_tag_link($tag->term_id); ?>"> <?php echo $tag->name; ?> </a>
+                                            <a class="btn btn-dark btn-sm bg-color-theme border-0 rounded-0" href="<?php echo esc_url(get_tag_link($tag->term_id)); ?>"> <?php echo esc_html($tag->name); ?> </a>
                                             <?php if ($index > 1) {
                                                 break;
                                             } ?>
@@ -121,18 +121,18 @@ $format     = get_post_format() ?: 'standard';
 
                     <div class="single-post-nav border-top border-bottom py-2 my-3">
                         <div class="share-post">
-                            <?php echo justg_share(); ?>
+                            <?php echo velocity_berita15_share(); ?>
                         </div>
                         <div class="nav-post mt-2">
                             <div class="d-flex justify-content-between" aria-label="Navigation Post">
                                 <?php
                                 $prev_post = get_adjacent_post(false, '', true);
                                 if (!empty($prev_post)) {
-                                    echo '<a href="' . get_permalink($prev_post->ID) . '" class="btn btn-sm btn-light rounded-0 border" title="' . $prev_post->post_title . '">Prev</a>';
+                                    echo '<a href="' . esc_url(get_permalink($prev_post->ID)) . '" class="btn btn-sm btn-light rounded-0 border" rel="prev" title="' . esc_attr($prev_post->post_title) . '">Prev</a>';
                                 }
                                 $next_post = get_adjacent_post(false, '', false);
                                 if (!empty($next_post)) {
-                                    echo '<a href="' . get_permalink($next_post->ID) . '" class="btn btn-sm btn-light rounded-0 border" title="' . $next_post->post_title . '">Next</a>';
+                                    echo '<a href="' . esc_url(get_permalink($next_post->ID)) . '" class="btn btn-sm btn-light rounded-0 border ms-auto" rel="next" title="' . esc_attr($next_post->post_title) . '">Next</a>';
                                 }
                                 ?>
                             </div>
@@ -152,7 +152,8 @@ $format     = get_post_format() ?: 'standard';
                                 'post_type'         => 'post',
                                 'post__not_in'      => [get_the_ID()],
                                 'posts_per_page'    => 4,
-                                'category__in'      => $category_ids
+                                'category__in'      => $category_ids,
+                                'no_found_rows'     => true,
                             );
                             // The Query
                             $the_query = new WP_Query($post1_args);
@@ -168,6 +169,7 @@ $format     = get_post_format() ?: 'standard';
                                 }
                                 echo '</div>';
                             }
+                            wp_reset_postdata();
                             ?>
                         </div>
                     </div>
@@ -195,25 +197,20 @@ $format     = get_post_format() ?: 'standard';
 </div><!-- #single-wrapper -->
 
 <?php 
-$post = get_post( get_the_ID() );
-$previous_post = get_previous_post();
-$previous_post = $previous_post->ID; 
-$next_post = get_next_post();
-$next_post = $next_post->ID; 
-
 // The Query.
 $the_recquery = new WP_Query( 
     array( 
         'post_type' => 'post',
         'post__not_in' => array(get_the_ID()),
-        'posts_per_page'=> 2
+        'posts_per_page'=> 2,
+        'no_found_rows' => true,
     )  
 );
 ?>
 
 <?php if($the_recquery->have_posts()): ?>
     <div class="toast-container position-fixed bottom-0 start-0 p-3">
-        <div class="toast show bg-white" data-bs-config='{"show":1}' role="alert" aria-live="assertive" aria-atomic="true">
+        <div class="toast show bg-white berita-rekomendasi" data-bs-config='{"show":1}' role="alert" aria-live="assertive" aria-atomic="true">
             <div class="toast-header">
                 <strong class="me-auto">Rekomendasi</strong>                
                 <button type="button" class="btn-close" data-bs-dismiss="toast" aria-label="Close"></button>

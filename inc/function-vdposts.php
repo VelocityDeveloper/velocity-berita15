@@ -7,7 +7,7 @@ function module_cardposts($style){
             echo '<div class="row g-2">';
                 echo '<div class="col-4">';
                     echo '<a class="d-block ratio ratio-1x1 bg-light" href="'.get_the_permalink().'">';
-                        echo get_the_post_thumbnail( get_the_ID(), 'thumbnail', array( 'class' => 'w-100' ) );
+                        echo get_the_post_thumbnail( get_the_ID(), 'thumbnail', array( 'class' => 'w-100', 'alt' => the_title_attribute( array( 'echo' => false ) ) ) );
                     echo '</a>';
                 echo '</div>';
                 echo '<div class="col-7">';
@@ -24,7 +24,7 @@ function module_cardposts($style){
             if (has_post_thumbnail()) :
                 echo '<a class="d-block mb-2" href="'.get_the_permalink().'">';
                     echo '<div class="ratio ratio-16x9 bg-light">';
-                        echo get_the_post_thumbnail( get_the_ID(), 'medium', array( 'class' => 'w-100' ) );
+                        echo get_the_post_thumbnail( get_the_ID(), 'medium', array( 'class' => 'w-100', 'alt' => the_title_attribute( array( 'echo' => false ) ) ) );
                     echo '</div>';
                 echo '</a>';
             endif;
@@ -40,10 +40,10 @@ function module_cardposts($style){
         case '3':
             echo '<div class="d-block position-relative overflow-hidden cardposts-3">';
                 echo '<a class="ratio ratio-4x3 bg-light" href="'.get_the_permalink().'">';
-                    echo get_the_post_thumbnail( get_the_ID(), 'medium', array( 'class' => 'w-100' ) );
+                    echo get_the_post_thumbnail( get_the_ID(), 'medium', array( 'class' => 'w-100', 'alt' => the_title_attribute( array( 'echo' => false ) ) ) );
                 echo '</a>';
                 echo '<div class="position-absolute bottom-0 end-0 start-0 p-2">';
-                    echo '<a title="'.get_the_title().'" class="position-relative small z-1 text-white" href="'.get_the_permalink().'">' . vdberita_limit_text(get_the_title(),5) . '</a>';
+                    echo '<a title="'.the_title_attribute( array( 'echo' => false ) ).'" class="position-relative small z-1 text-white" href="'.get_the_permalink().'">' . esc_html( vdberita_limit_text( get_the_title(), 5 ) ) . '</a>';
                     echo '<div class="bg-dark opacity-50 position-absolute top-0 bottom-0 end-0 start-0"></div>';
                 echo '</div>';
             echo '</div>';
@@ -59,7 +59,7 @@ function module_cardposts($style){
         case '5':
             echo '<div class="position-relative">';
                 echo '<div class="ratio ratio-4x3 bg-secondary">';
-                    echo get_the_post_thumbnail( get_the_ID(), 'large', array( 'class' => 'w-100' ) );
+                    echo get_the_post_thumbnail( get_the_ID(), 'large', array( 'class' => 'w-100', 'alt' => the_title_attribute( array( 'echo' => false ) ) ) );
                 echo '</div>';
                 echo '<div class="position-absolute end-0 start-0 bottom-0 p-3">';
                     echo '<div class="position-relative z-1">';
@@ -78,7 +78,7 @@ function module_cardposts($style){
                 echo '<div class="row g-2">';
                     echo '<div class="col-4">';
                         echo '<div class="ratio ratio-1x1 bg-secondary">';
-                        echo get_the_post_thumbnail( get_the_ID(), 'thumbnail', array( 'class' => 'w-100' ) );
+                        echo get_the_post_thumbnail( get_the_ID(), 'thumbnail', array( 'class' => 'w-100', 'alt' => the_title_attribute( array( 'echo' => false ) ) ) );
                         echo '</div>';
                     echo '</div>';
                     echo '<div class="col-7">';
