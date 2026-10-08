@@ -103,7 +103,7 @@ aside.widget .widget-title:after,
     #primary {
         max-width: 75% !important;
     }
-    #main-nav #main-menu > li > .nav-link {
+    #main-menu > li > .nav-link {
         padding: 0.85rem 1rem !important;
         text-transform: uppercase;
         font-weight: bold;
@@ -111,8 +111,8 @@ aside.widget .widget-title:after,
         font-size: .85rem;
         transition: all .5s;
     }
-    #main-nav #main-menu > li > .nav-link:hover,
-    #main-nav #main-menu > li.current-menu-item > .nav-link {
+    #main-menu > li > .nav-link:hover,
+    #main-menu > li.current-menu-item.active > .nav-link {
         background-color: var(--color-theme);
         color: #ffffff;
     }
