@@ -43,7 +43,7 @@ class Tabs_Berita_6_Widget extends WP_Widget {
 
             ?>
 
-            <ul class="nav nav-tabs p-0" style="font-size:.75rem;" id="widgetberitaTabs" role="tablist" style="border-bottom: 0.2rem solid var(--color-theme);">
+            <ul class="nav nav-tabs flex-nowrap p-0" style="font-size:.75rem;border-bottom: 0.2rem solid var(--color-theme);" id="widgetberitaTabs" role="tablist">
                 <li class="nav-item" role="presentation">
                     <button class="nav-link rounded-0 mb-0 bg-light active" id="wb-popular-tab" data-bs-toggle="tab" data-bs-target="#wb-tab-popular" type="button" role="tab" aria-controls="wb-tab-popular" aria-selected="true">
                         POPULAR

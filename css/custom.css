@@ -159,3 +159,7 @@ aside.widget .widget-title:after,
         display: none !important;
     }
 }
+#widgetberitaTabs .nav-link {
+    padding: .4rem .65rem;
+    white-space: nowrap;
+}
