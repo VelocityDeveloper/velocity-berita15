@@ -26,6 +26,9 @@ if (!function_exists('justg_child_enqueue_parent_style')) {
             $theme->parent()->get('Version')
         );
 
+        // Font Roboto 400 (dulu dimuat Kirki lewat tipografi tema induk).
+        wp_enqueue_style('velocity-berita15-roboto', 'https://fonts.googleapis.com/css2?family=Roboto:wght@400&display=swap', array(), null);
+
         // Slick hanya dipakai carousel Posts Home 4 di beranda.
         if (is_front_page() || is_home()) {
             wp_enqueue_style('slick', 'https://cdnjs.cloudflare.com/ajax/libs/slick-carousel/1.8.1/slick.min.css', array(), '1.8.1');
@@ -40,6 +43,14 @@ if (!function_exists('justg_child_enqueue_parent_style')) {
             $css_version
         );
 
+        // Dimuat sesudah CSS tema induk (justg-styles) supaya skala ukuran lama berlaku.
+        wp_enqueue_style(
+            'velocity-berita15-skala',
+            get_stylesheet_directory_uri() . '/css/skala.css',
+            array('justg-styles'),
+            $theme->get('Version') . '.' . filemtime(get_stylesheet_directory() . '/css/skala.css')
+        );
+
         wp_enqueue_style(
             'child-style',
             get_stylesheet_uri(),
@@ -50,6 +61,6 @@ if (!function_exists('justg_child_enqueue_parent_style')) {
         $js_version = $theme->parent()->get('Version') . '.' . filemtime(get_stylesheet_directory() . '/js/custom.js');
         wp_enqueue_script('justg-custom-scripts', get_stylesheet_directory_uri() . '/js/custom.js', array('jquery'), $js_version, true);
     }
-    // Prioritas 30: sesudah CSS tema induk (prioritas 20) agar custom.css tidak kalah.
-    add_action('wp_enqueue_scripts', 'justg_child_enqueue_parent_style', 30);
+    // Prioritas bawaan (10): urutan CSS sama seperti versi lama, tampilan tidak bergeser.
+    add_action('wp_enqueue_scripts', 'justg_child_enqueue_parent_style');
 }

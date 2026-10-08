@@ -145,7 +145,6 @@ aside.widget .widget-title:after,
 }
 .carousel-caption span {
     --bs-bg-opacity: .9;
-    line-height: 1.4;
 }
 .carousel-posthome-4 .slick-track {
     display: flex;
@@ -158,8 +157,4 @@ aside.widget .widget-title:after,
     .berita-rekomendasi {
         display: none !important;
     }
-}
-#widgetberitaTabs .nav-link {
-    padding: .4rem .65rem;
-    white-space: nowrap;
 }

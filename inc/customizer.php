@@ -140,7 +140,7 @@ function velocity_berita15_customize_register(WP_Customize_Manager $wp_customize
 	$wp_customize->add_section('section_homeberita', array(
 		'panel'       => 'panel_berita',
 		'title'       => esc_html__('Home', 'justg'),
-		'description' => esc_html__('Judul kosong = nama kategori yang dipilih.', 'justg'),
+		'description' => esc_html__('Judul kosong = nama kategori yang dipilih (tanpa kategori: Recent Posts).', 'justg'),
 		'priority'    => 40,
 	));
 
@@ -192,7 +192,9 @@ add_action('wp_head', 'velocity_berita15_css_warna', 100);
 function velocity_berita15_css_warna()
 {
 	printf(
-		'<style id="velocity-berita15-warna">:root{--color-theme:%1$s;}.border-color-theme{--bs-border-color:%1$s;}</style>' . "\n",
+		'<style id="velocity-berita15-warna">:root{--color-theme:%1$s;}.border-color-theme{--bs-border-color:%1$s;}.bg-color-theme{background-color:%1$s;}'
+		// Tipografi dasar yang dulu dicetak Kirki.
+		. 'body{font-family:Roboto,Arial,Helvetica,sans-serif;font-size:14px;font-weight:400;line-height:1.5;}</style>' . "\n",
 		esc_attr(velocity_berita15_warna())
 	);
 }
@@ -221,18 +223,18 @@ function velocity_berita15_kategori($id)
 }
 
 /**
- * Judul blok: isian Customizer, lalu nama kategori, lalu "Berita Terbaru".
- * "Recent Posts" adalah bawaan versi Kirki, jadi diperlakukan sebagai kosong.
+ * Judul blok: isian Customizer, lalu nama kategori yang dipilih, lalu "Recent Posts"
+ * (judul bawaan versi lama).
  */
 function velocity_berita15_judul($id)
 {
 	$judul = trim((string) get_theme_mod('title_' . $id, ''));
-	if ($judul !== '' && $judul !== 'Recent Posts') {
+	if ($judul !== '') {
 		return $judul;
 	}
 	$cat  = velocity_berita15_kategori($id);
 	$term = ($cat !== '') ? get_term((int) $cat, 'category') : null;
-	return ($term && !is_wp_error($term)) ? $term->name : __('Berita Terbaru', 'justg');
+	return ($term && !is_wp_error($term)) ? $term->name : 'Recent Posts';
 }
 
 /** Kepala blok beranda: judul, menjadi link ke arsip kategori bila kategori dipilih. */
